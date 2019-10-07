@@ -6,8 +6,7 @@ import io.github.therealmone.cpuemulator.memory.CMemory;
 import io.github.therealmone.cpuemulator.memory.ProgramCounter;
 import io.github.therealmone.cpuemulator.memory.Register;
 
-import java.util.stream.Stream;
-
+import static io.github.therealmone.cpuemulator.Config.REG_COUNT;
 import static io.github.therealmone.cpuemulator.decoder.CommandDecoder.*;
 
 public class CPU {
@@ -44,8 +43,8 @@ public class CPU {
         Context(final CMemory memory) {
             this.memory = memory;
             this.programCounter = new ProgramCounter();
-            this.registers = new Register[16];
-            for (int i = 0; i < 16; i++) {
+            this.registers = new Register[REG_COUNT];
+            for (int i = 0; i < REG_COUNT; i++) {
                 registers[i] = new Register();
             }
         }

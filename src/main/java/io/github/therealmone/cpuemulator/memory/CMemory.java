@@ -2,20 +2,17 @@ package io.github.therealmone.cpuemulator.memory;
 
 import io.github.therealmone.cpuemulator.command.Command;
 
-import java.util.Arrays;
+import static io.github.therealmone.cpuemulator.Config.MEM_SIZE;
 
 public class CMemory {
 
     private final Command[] data;
 
-    public CMemory(final int size) {
-        this.data = new Command[size];
-    }
-
-    public CMemory(final int[] data) {
-        this.data = Arrays.stream(data)
-                .mapToObj(Command::new)
-                .toArray(Command[]::new);
+    public CMemory() {
+        this.data = new Command[MEM_SIZE];
+        for (int i = 0; i < MEM_SIZE; i++) {
+            data[i] = new Command(0);
+        }
     }
 
     public Command get(final ProgramCounter pc) {

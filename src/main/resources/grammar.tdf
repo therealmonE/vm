@@ -1,0 +1,88 @@
+lexis
+    MOV_KEYWORD
+        "MOV"
+
+    ADD_KEYWORD
+        "ADD"
+
+    GOTO_KEYWORD
+        "GOTO"
+
+    REG_KEYWORD
+        "reg"
+
+    LEFT_SQUARE_BRACKET
+        "\["
+
+    RIGHT_SQUARE_BRACKET
+        "\]"
+
+    DIGIT
+        "0|([1-9][0-9]*)"
+
+    WS
+        "\s" [hidden: true]
+
+    DEL
+        ";"
+
+
+env
+
+    import "io.github.therealmone.cpuemulator.memory.*"
+    import "io.github.therealmone.cpuemulator.command.*"
+    import "static io.github.therealmone.cpuemulator.parser.CommandConstructor.*"
+
+    code "
+        private final CMemory memory = new CMemory();
+        private final ProgramCounter pc = new ProgramCounter();
+
+        @Override
+        public CMemory getMemory() {
+            return memory;
+        }
+
+        private void addCommand(final int command) {
+            memory.set(pc, new Command(command));
+            pc.increment();
+        }
+
+    "
+
+syntax
+
+    lang = {command, DEL};
+
+    command =
+        |   mov_command
+        |   add_command
+        |   goto_command
+        ;
+
+    mov_command =
+            MOV_KEYWORD
+        ,   register
+        ,   DIGIT
+        ,   <"addCommand(toMovCommand(ast.onCursor().asNode()));">
+        ;
+
+    add_command =
+            ADD_KEYWORD
+        ,   3 * register
+        ,   <"addCommand(toAddCommand(ast.onCursor().asNode()));">
+        ;
+
+    goto_command =
+            GOTO_KEYWORD
+        ,   DIGIT
+        ,   <"addCommand(toGotoCommand(ast.onCursor().asNode()));">
+        ;
+
+    register =
+            REG_KEYWORD
+        ,   LEFT_SQUARE_BRACKET
+        ,   DIGIT
+        ,   RIGHT_SQUARE_BRACKET
+        ;
+
+$

@@ -9,15 +9,15 @@ import static io.github.therealmone.cpuemulator.decoder.CommandDecoder.*;
 public enum Type {
     FINISH(0x00000000, (command, context) -> {}),
 
-    ASSIGN(0x00000001, ((command, context) -> {
+    MOV(0x00000001, (command, context) -> {
         final Literal literal = decodeLiteral(command);
         final Destination destination = decodeDestination(command);
         context.getRegisters()[destination.getBits()]
                 .setValue(literal.getBits());
         context.getProgramCounter().increment();
-    })),
+    }),
 
-    SUM(0x00000002, ((command, context) -> {
+    ADD(0x00000002, (command, context) -> {
         final Destination destination = decodeDestination(command);
         final FirstOperand firstOperand = decodeFirstOperand(command);
         final SecondOperand secondOperand = decodeSecondOperand(command);
@@ -26,19 +26,24 @@ public enum Type {
                         context.getRegisters()[secondOperand.getBits()].getValue()
         );
         context.getProgramCounter().increment();
-    }));
+    }),
 
-    private final int bits;
+    GOTO(0x00000003, (command, context) -> {
+        final Literal literal = decodeLiteral(command);
+        context.getProgramCounter().setValue(literal.getBits());
+    });
+
+    private final int header;
     private final BiConsumer<Command, CPU.Context> action;
 
-    Type(final int bits, final BiConsumer<Command, CPU.Context> action) {
-        this.bits = bits;
+    Type(final int header, final BiConsumer<Command, CPU.Context> action) {
+        this.header = header;
         this.action = action;
     }
 
     public static Type byBits(final int bits) {
         for (final Type type : Type.values()) {
-            if (type.bits == bits) {
+            if (type.header == bits) {
                 return type;
             }
         }
@@ -50,4 +55,7 @@ public enum Type {
         this.action.accept(command, context);
     }
 
+    public int getHeader() {
+        return header;
+    }
 }
