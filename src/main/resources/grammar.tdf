@@ -54,16 +54,15 @@ syntax
     lang = {command, DEL};
 
     command =
-        |   mov_command
-        |   add_command
-        |   goto_command
+        |   mov_command -> "addCommand(toMovCommand(node));"
+        |   add_command -> "addCommand(toAddCommand(node));"
+        |   goto_command -> "addCommand(toGotoCommand(node));"
         ;
 
     mov_command =
             MOV_KEYWORD
         ,   register
         ,   DIGIT
-        ,   <"addCommand(toMovCommand(ast.onCursor().asNode()));">
         ;
 
     add_command =
@@ -71,13 +70,11 @@ syntax
         ,   register
         ,   register
         ,   register
-        ,   <"addCommand(toAddCommand(ast.onCursor().asNode()));">
         ;
 
     goto_command =
             GOTO_KEYWORD
         ,   DIGIT
-        ,   <"addCommand(toGotoCommand(ast.onCursor().asNode()));">
         ;
 
     register =
