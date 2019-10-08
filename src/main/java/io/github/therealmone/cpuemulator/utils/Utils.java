@@ -1,6 +1,6 @@
 package io.github.therealmone.cpuemulator.utils;
 
-import io.github.therealmone.tdf4j.model.ast.ASTNode;
+import io.github.tdf4j.core.model.ast.ASTNode;
 
 import java.io.*;
 
@@ -20,7 +20,7 @@ public final class Utils {
     }
 
     public static int toInt(final ASTNode node, final int child) {
-        return Integer.parseInt(node.children().get(child).asLeaf().token().value());
+        return Integer.parseInt(node.getChildren().get(child).asLeaf().getToken().getValue());
     }
 
 }

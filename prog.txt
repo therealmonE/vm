@@ -1,4 +1,3 @@
 MOV reg[0] 1;
 MOV reg[1] 1;
 ADD reg[7] reg[0] reg[1];
-GOTO 0;

@@ -1,8 +1,8 @@
 package io.github.therealmone.cpuemulator.parser;
 
+import io.github.tdf4j.core.model.ast.ASTNode;
 import io.github.therealmone.cpuemulator.command.Type;
 import io.github.therealmone.cpuemulator.utils.Utils;
-import io.github.therealmone.tdf4j.model.ast.ASTNode;
 
 import static io.github.therealmone.cpuemulator.Config.*;
 
@@ -11,13 +11,15 @@ public final class CommandConstructor {
     /**
      * add_command =
      *          ADD_KEYWORD
-     *      ,   3 * register
+     *      ,   register
+     *      ,   register
+     *      ,   register
      *      ;
      */
     public static int toAddCommand(final ASTNode node) {
-        final int destination = Utils.toInt(node.children().get(1).asNode(), 2);
-        final int op1 = Utils.toInt(node.children().get(2).asNode(), 2);
-        final int op2 = Utils.toInt(node.children().get(3).asNode(), 2);
+        final int destination = Utils.toInt(node.getChildren().get(1).asNode(), 2);
+        final int op1 = Utils.toInt(node.getChildren().get(2).asNode(), 2);
+        final int op2 = Utils.toInt(node.getChildren().get(3).asNode(), 2);
         return toCommand(Type.ADD, 0, destination, op1, op2);
     }
 
@@ -29,7 +31,7 @@ public final class CommandConstructor {
      *      ;
      */
     public static int toMovCommand(final ASTNode node) {
-        final int reg = Utils.toInt(node.children().get(1).asNode(), 2);
+        final int reg = Utils.toInt(node.getChildren().get(1).asNode(), 2);
         final int literal = Utils.toInt(node, 2);
         return toCommand(Type.MOV, literal, reg, 0, 0);
     }

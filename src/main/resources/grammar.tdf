@@ -68,7 +68,9 @@ syntax
 
     add_command =
             ADD_KEYWORD
-        ,   3 * register
+        ,   register
+        ,   register
+        ,   register
         ,   <"addCommand(toAddCommand(ast.onCursor().asNode()));">
         ;
 
