@@ -1,6 +1,11 @@
 package io.github.therealmone.cpuemulator.decoder;
 
 import io.github.therealmone.cpuemulator.command.*;
+import io.github.therealmone.cpuemulator.decoder.impl.DestinationDecoder;
+import io.github.therealmone.cpuemulator.decoder.impl.FirstOperandDecoder;
+import io.github.therealmone.cpuemulator.decoder.impl.LiteralDecoder;
+import io.github.therealmone.cpuemulator.decoder.impl.SecondOperandDecoder;
+import io.github.therealmone.cpuemulator.decoder.impl.TypeDecoder;
 
 public final class CommandDecoder {
     private static final TypeDecoder typeDecoder = new TypeDecoder();
@@ -9,7 +14,7 @@ public final class CommandDecoder {
     private static final FirstOperandDecoder firstOperandDecoder = new FirstOperandDecoder();
     private static final SecondOperandDecoder secondOperandDecoder = new SecondOperandDecoder();
 
-    public static Type decodeType(final Command command) {
+    public static CommandType decodeType(final Command command) {
         return typeDecoder.decode(command);
     }
 

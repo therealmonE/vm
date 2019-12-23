@@ -2,11 +2,11 @@ package io.github.therealmone.cpuemulator.decoder;
 
 import java.util.function.Function;
 
-class Mask implements Function<Integer, Integer> {
+public class Mask implements Function<Integer, Integer> {
 
     private final int mask;
 
-    Mask(final int mask) {
+    public Mask(final int mask) {
         this.mask = mask;
     }
 

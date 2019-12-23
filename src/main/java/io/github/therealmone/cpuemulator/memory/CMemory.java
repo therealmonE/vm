@@ -29,6 +29,15 @@ public class CMemory {
         this.data[pc.getValue()] = command;
     }
 
+    public void load(int[] bits) {
+        if (bits.length > data.length) {
+            throw new IllegalArgumentException();
+        }
+        for (int i = 0; i < bits.length; i++) {
+            data[i] = new Command(bits[i]);
+        }
+    }
+
     private boolean invalidPC(final ProgramCounter pc) {
         return pc.getValue() < 0 || pc.getValue() >= data.length;
     }

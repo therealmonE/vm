@@ -6,7 +6,7 @@ public class Shift implements Function<Integer, Integer> {
 
     private final int shift;
 
-    Shift(final int shift) {
+    public Shift(final int shift) {
         this.shift = shift;
     }
 
