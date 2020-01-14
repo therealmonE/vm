@@ -3,7 +3,8 @@ package io.github.therealmone.cpuemulator;
 public final class Config {
 
     public static int REG_COUNT = 16;
-    public static int MEM_SIZE = 100;
+    public static int C_MEM_SIZE = 100;
+    public static int D_MEM_SIZE = 100;
 
     public static int TYPE_SHIFT = 20;
     public static int TYPE_MASK = 0x0000000F;

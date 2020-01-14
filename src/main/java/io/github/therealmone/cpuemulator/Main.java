@@ -1,6 +1,6 @@
 package io.github.therealmone.cpuemulator;
 
-import io.github.therealmone.cpuemulator.memory.CMemory;
+import io.github.therealmone.cpuemulator.memory.CommandMemory;
 
 import java.io.IOException;
 
@@ -17,8 +17,8 @@ public class Main {
         }
     }
 
-    private static CMemory initMemory() {
-        final CMemory memory = new CMemory();
+    private static CommandMemory initMemory() {
+        final CommandMemory memory = new CommandMemory();
         memory.load(new int[] {
                 0b0001_00000001_0001_0000_0000,
                 0b0001_00000010_0010_0000_0000,

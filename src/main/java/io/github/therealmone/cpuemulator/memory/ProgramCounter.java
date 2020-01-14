@@ -8,6 +8,10 @@ public class ProgramCounter {
         return value++;
     }
 
+    public int incrementBy(int value) {
+        return this.value += value;
+    }
+
     public void setValue(int value) {
         this.value = value;
     }

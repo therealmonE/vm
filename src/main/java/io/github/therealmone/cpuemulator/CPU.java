@@ -2,7 +2,8 @@ package io.github.therealmone.cpuemulator;
 
 import io.github.therealmone.cpuemulator.command.Command;
 import io.github.therealmone.cpuemulator.command.CommandType;
-import io.github.therealmone.cpuemulator.memory.CMemory;
+import io.github.therealmone.cpuemulator.memory.CommandMemory;
+import io.github.therealmone.cpuemulator.memory.DataMemory;
 import io.github.therealmone.cpuemulator.memory.ProgramCounter;
 import io.github.therealmone.cpuemulator.memory.Register;
 
@@ -11,12 +12,14 @@ import static io.github.therealmone.cpuemulator.decoder.CommandDecoder.*;
 
 public class CPU {
 
-    private final CMemory memory;
+    private final CommandMemory cmem;
+    private final DataMemory dmem;
     private final ProgramCounter programCounter;
     private final Register[] registers;
 
-    CPU(final CMemory memory) {
-        this.memory = memory;
+    public CPU(final CommandMemory cmem) {
+        this.cmem = cmem;
+        this.dmem = new DataMemory();
         this.programCounter = new ProgramCounter();
         this.registers = new Register[REG_COUNT];
         for (int i = 0; i < registers.length; i++) {
@@ -24,22 +27,26 @@ public class CPU {
         }
     }
 
-    void processNextCommand() {
-        final Command nextCommand = memory.get(programCounter);
+    public void processNextCommand() {
+        final Command nextCommand = cmem.get(programCounter);
         final CommandType commandType = decodeType(nextCommand);
         commandType.accept(nextCommand, this);
     }
 
-    boolean isDone() {
+    public boolean isDone() {
         try {
-            return decodeType(memory.get(programCounter)) == CommandType.FINISH;
+            return decodeType(cmem.get(programCounter)) == CommandType.FINISH;
         } catch (IndexOutOfBoundsException e) {
             return true;
         }
     }
 
-    public CMemory getMemory() {
-        return memory;
+    public CommandMemory getCommandMemory() {
+        return cmem;
+    }
+
+    public DataMemory getDataMemory() {
+        return dmem;
     }
 
     public ProgramCounter getProgramCounter() {

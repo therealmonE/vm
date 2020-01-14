@@ -2,16 +2,14 @@ package io.github.therealmone.cpuemulator.memory;
 
 import io.github.therealmone.cpuemulator.command.Command;
 
-import static io.github.therealmone.cpuemulator.Config.MEM_SIZE;
+import static io.github.therealmone.cpuemulator.Config.C_MEM_SIZE;
 
-public class CMemory {
+public class CommandMemory extends Memory<Command> {
 
-    private final Command[] data;
-
-    public CMemory() {
-        this.data = new Command[MEM_SIZE];
-        for (int i = 0; i < MEM_SIZE; i++) {
-            data[i] = new Command(0);
+    public CommandMemory() {
+        super(new Command[C_MEM_SIZE]);
+        for (int i = 0; i < data.length; i++) {
+            data[i] = new Command(0x0);
         }
     }
 
